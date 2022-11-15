@@ -7,6 +7,7 @@
 #include <linux/module.h>
 #include <linux/slab.h>
 #include <linux/types.h>
+#include <linux/uaccess.h>
 
 #define OK 0
 #define ERROR -1
@@ -32,13 +33,21 @@ int globalvar_open(struct inode *p, struct file *f) {
   return 0;
 }
 
-ssize_t globalvar_write(struct file *f, const char __user *u, size_t s,
+ssize_t globalvar_write(struct file *f, const char __user *buf, size_t len,
                         loff_t *l) {
+  char *str = NULL;
+  str = kmalloc(len, GFP_KERNEL);
+  copy_from_user(str, buf, len);
   printk(KERN_EMERG "gobalvar_write.\n");
-  return 0;
+  return len;
 }
 
-ssize_t globalvar_read(struct file *f, char __user *u, size_t s, loff_t *l) {
+ssize_t globalvar_read(struct file *f, char __user *buf, size_t len,
+                       loff_t *l) {
+  char *str = NULL;
+  str = kmalloc(len, GFP_KERNEL);
+
+  copy_to_user(buf, str, len);
   printk(KERN_EMERG "gobalvar_read.\n");
   return 0;
 }
@@ -79,7 +88,7 @@ int __init globalvar_init(void) {
     class_destroy(dev_class);
     unregister_chrdev_region(devNum, 1);
   }
-  printk(KERN_EMERG "Successfully init globalvar.\n");
+  printk(KERN_EMERG "Successfully init globalvar, major: %d, minor: %d\n", MAJOR(devNum), MINOR(devNum));
   return 0;
 }
 

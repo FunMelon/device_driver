@@ -1,0 +1,1 @@
+cmd_/home/funmelon/code/linux/device_driver/modules.order := {   echo /home/funmelon/code/linux/device_driver/globalvar.ko; :; } | awk '!x[$$0]++' - > /home/funmelon/code/linux/device_driver/modules.order

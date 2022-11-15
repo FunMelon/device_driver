@@ -1,0 +1,1 @@
+cmd_/home/funmelon/code/linux/device_driver/Module.symvers := sed 's/ko$$/o/' /home/funmelon/code/linux/device_driver/modules.order | scripts/mod/modpost -m -a -E  -o /home/funmelon/code/linux/device_driver/Module.symvers -e -i Module.symvers   -T -

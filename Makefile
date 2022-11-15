@@ -1,9 +1,9 @@
 ifneq ($(KERNELRELEASE),)
-obj-m := device.o
+obj-m := globalvar.o
 else
 KDIR := /usr/src/linux-headers-$(shell uname -r)
 all:
 	make -C $(KDIR) M=$(PWD) modules
 clean:
-	make -C $(KDIR) M=$(PWD) clean
+	rm -rf *.o *.mod *.mod.c *.mod.o *.ko *.order *symvers
 endif

@@ -5,5 +5,5 @@ KDIR := /usr/src/linux-headers-$(shell uname -r)
 all:
 	make -C $(KDIR) M=$(PWD) modules
 clean:
-	rm -rf *.o *.mod *.mod.c *.mod.o *.ko *.order *symvers
+	make -C $(KDIR) M=$(PWD) clean 
 endif
